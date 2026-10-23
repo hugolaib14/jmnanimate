@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Hola!</title>
+  <style>
+    :root {
+      --c1: #ff3cac;
+      --c2: #784ba0;
+      --c3: #2b86c5;
+      --c4: #00f5a0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    /* Fondo degradado animado */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(-45deg, var(--c1), var(--c2), var(--c3), var(--c4));
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Burbujas decorativas flotando */
+    .bubble {
+      position: fixed;
+      bottom: -120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(2px);
+      animation: rise linear infinite;
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Contenedor del saludo */
+    .saludo {
+      text-align: center;
+      z-index: 2;
+      animation: floaty 4s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-20px); }
+    }
+
+    /* Texto HOLA */
+    .hola {
+      font-size: clamp(4rem, 18vw, 12rem);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      display: flex;
+      gap: 0.02em;
+      justify-content: center;
+    }
+
+    .hola span {
+      display: inline-block;
+      background: linear-gradient(180deg, #fff, #ffe600, #ff6b6b, #4deaff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      animation: pop 2.4s ease-in-out infinite;
+    }
+
+    .hola span:nth-child(1) { animation-delay: 0s; }
+    .hola span:nth-child(2) { animation-delay: 0.2s; }
+    .hola span:nth-child(3) { animation-delay: 0.4s; }
+    .hola span:nth-child(4) { animation-delay: 0.6s; }
+
+    @keyframes pop {
+      0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+      50%      { transform: translateY(-18px) scale(1.12) rotate(-4deg); }
+    }
+
+    /* Subtítulo */
+    .sub {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      color: #fff;
+      font-weight: 600;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 0.6s;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 0.95; }
+    }
+
+    /* Botón de confeti */
+    .btn {
+      margin-top: 2rem;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #784ba0;
+      background: #fff;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 1s;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn:active { transform: scale(0.96); }
+  </style>
+</head>
+<body>
+  <div class="saludo">
+    <div class="hola">
+      <span>H</span><span>o</span><span>l</span><span>a</span>
+    </div>
+    <p class="sub">Bienvenido a mi web con colores chulos ✨</p>
+    <button class="btn" onclick="lanzarConfeti()">¡Dame confeti! 🎉</button>
+  </div>
+
+  <script>
+    // Crear burbujas flotantes
+    const colores = ["#ff3cac", "#784ba0", "#2b86c5", "#00f5a0", "#ffe600"];
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement("div");
+      b.className = "bubble";
+      const size = Math.random() * 80 + 20;
+      b.style.width = size + "px";
+      b.style.height = size + "px";
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.animationDuration = (Math.random() * 10 + 8) + "s";
+      b.style.animationDelay = Math.random() * 8 + "s";
+      document.body.appendChild(b);
+    }
+
+    // Confeti simple al pulsar el botón
+    function lanzarConfeti() {
+      for (let i = 0; i < 80; i++) {
+        const c = document.createElement("div");
+        c.style.position = "fixed";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.top = "-20px";
+        c.style.width = "10px";
+        c.style.height = "10px";
+        c.style.background = colores[Math.floor(Math.random() * colores.length)];
+        c.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+        c.style.zIndex = 5;
+        c.style.pointerEvents = "none";
+        document.body.appendChild(c);
+
+        const caida = c.animate(
+          [
+            { transform: "translateY(0) rotate(0deg)", opacity: 1 },
+            { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+          ],
+          { duration: Math.random() * 2000 + 1500, easing: "ease-in" }
+        );
+        caida.onfinish = () => c.remove();
+      }
+    }
+  </script>
+</body>
+</html>
